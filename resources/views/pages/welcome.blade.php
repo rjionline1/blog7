@@ -1,5 +1,11 @@
 @extends('main')
 
+@section('stylesheets')
+
+@endsection
+
+@section('title', '| Homepage')
+
 @section('content')
 
       <div class="row">
@@ -53,4 +59,8 @@
         </div>
       </div>
 
+@endsection
+
+@section('scripts')
+  
 @endsection
