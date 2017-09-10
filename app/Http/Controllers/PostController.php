@@ -8,6 +8,12 @@ use Session;
 
 class PostController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class PostController extends Controller
     public function index()
     {
         // create varable and store all posts in it
-        $posts = Post::all();
+        $posts = Post::orderBy('id','desc')->paginate(5);
 
         // return a view and pass in variable values
         return view('posts.index')->withPosts($posts);
@@ -43,12 +49,14 @@ class PostController extends Controller
         // validate the data
         $this->validate($request, [
             'title' => 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body' => 'required'
             ]);
 
         // store in database
         $post = new Post;
         $post->title = $request->title;
+        $post->slug = $request->slug;
         $post->body = $request->body;
 
         $post->save();
@@ -79,7 +87,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        // find the post in the database and save it as a variable
+        $post = Post::find($id);
+
+        // return the view passing in the variable
+        return view('posts.edit')->withPost($post);
     }
 
     /**
@@ -91,7 +103,39 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validate the form data
+        
+        $post = Post::find($id);
+
+        if ($request->input('slug') == $post->slug) {
+            $this->validate($request, [
+            'title' => 'required|max:255',
+            'body' => 'required'
+            ]);
+
+        } else {
+
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'body' => 'required'
+            ]);
+        }
+
+        // save the data to the database
+        $post = Post::find($id);
+
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->body = $request->body;
+
+        $post->save();
+
+        // set flash data success message
+        Session::flash('success', 'The blog post was successfully updated!');
+
+        // redirect with flash data to posts.show
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -102,6 +146,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+        Session::flash('success', 'The post has been successfully deleted.');
+
+        return redirect()->route('posts.index');
+
+
     }
 }

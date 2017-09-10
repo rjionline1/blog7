@@ -40,6 +40,12 @@
 				@endforeach
 			</tbody>
 		</table>
+		<div class="text-center">
+			{!! $posts->links() !!}
+		</div>
+		<div class="text-center form-spacing-bottom">
+			Page {!! $posts->currentPage(); !!} of {!! $posts->lastPage(); !!} Pages
+		</div>
 	</div>
 </div>
 
