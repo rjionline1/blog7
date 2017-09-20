@@ -1,3 +1,39 @@
 .margin-top {
 	margin-top: 20px;
 }
+
+.author-image {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	float: left;
+	margin-top: 12px;
+}
+
+.author-name {
+	margin-left: 10px;
+	float: left;
+	line-height: 60%;
+}
+
+.created {
+	line-height: 50%;
+	color: lightgrey;
+	font-style: italic;
+	margin-bottom: 20px;
+}
+
+.comment-content {
+	margin-left: 60px;
+	margin-bottom: 35px;
+	color: grey;
+	clear: both;
+}
+
+.image {
+	border-radius: 5%;
+	box-shadow: 10px 10px 5px #888888;
+	display: block;
+    margin: auto;
+    padding: 1px;
+}

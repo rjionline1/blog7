@@ -15,14 +15,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="/blog">Blog</a></li>
-
-        <!--Temporary nav link to create post page...remove when Alex shows proper way to edit nav bar-->
-        <li><a href="/posts/create">Post</a></li>
-
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li class="{{ Request::is('/') ? "active" : "" }}"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+        <li class="{{ Request::is('blog') ? "active" : "" }}"><a href="/blog">Blog</a></li>
+        <li class="{{ Request::is('posts/create') ? "active" : "" }}"><a href="/posts/create">Post</a></li>
+        <li class="{{ Request::is('about') ? "active" : "" }}"><a href="/about">About</a></li>
+        <li class="{{ Request::is('contact') ? "active" : "" }}"><a href="/contact">Contact</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
@@ -30,6 +27,8 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello {{ Auth::user()->name }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{route('posts.index')}}">Posts</a></li>
+            <li><a href="{{route('categories.index')}}">Categories</a></li>
+            <li><a href="{{route('tags.index')}}">Tags</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{ route('logout') }}"
                 onclick="event.preventDefault();
@@ -45,7 +44,7 @@
         @else
           <a href="{{ route('login') }}" class="btn btn-link">Login</a>
         @endif
-        
+
       </ul>
 
     </div><!-- /.navbar-collapse -->

@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('stylesheets')
-
+  {!!Html::style('css/styles.css')!!}
 @endsection
 
 @section('title', '| Homepage')
@@ -25,10 +25,12 @@
           @foreach($posts as $post)
             <div class="post">
               <h3>{{ $post->title }}</h3>
-              <p>{{ substr($post->body, 0, 50) }}{{ strlen($post->body) > 50 ? " ..." : ""}}</p>
+              <p>{{ substr(strip_tags($post->body), 0, 50) }}{{ strlen($post->body) > 50 ? " ..." : ""}}</p>
               <a href="{{ url('blog/' . $post->slug) }}" class ="btn btn-primary">Read More</a>
             </div>
+            
             <hr>
+
           @endforeach
         </div>
       

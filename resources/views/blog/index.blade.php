@@ -17,7 +17,7 @@
 
 			<h2>{{ $post->title }}</h2>
 			<h5>Published Date: {{ date('M j, Y', strtotime($post->created_at)) }}</h5>
-			<p>{{ substr($post->body, 0, 50) }}{{ strlen($post->body) > 50 ? " ..." : ""}}</p>
+			<p>{{ substr(strip_tags($post->body), 0, 50) }}{{ strlen($post->body) > 50 ? " ..." : ""}}</p>
 
 			<a href="{{route('posts.show', $post->id)}}" class="btn btn-primary">Read More</a>
 			<hr>
